@@ -1,0 +1,5 @@
+
+
+openai == 1.43.0
+python-jobspy == 1.1.65
+
