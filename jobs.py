@@ -71,10 +71,12 @@ def general_scrape_and_ai(unique_urls, assistant):
     new_data = [0]
     new_df = pd.DataFrame(columns=required_columns)
     offset = 0
-    while len(new_data) > 0:  # running in loop until scraping all data (in case that it blocked in middle of scraping by linkdein etc)
+    while len(
+            new_data) > 0:  # running in loop until scraping all data (in case that it blocked in middle of scraping by linkdein etc)
         try:
             print(f"offset:  {offset}")
-            new_data = scrape_all_jobs(os.getenv('search_term'), os.getenv('location'), os.getenv('hours_old'),
+            new_data = scrape_all_jobs(os.getenv('sites'), os.getenv('search_term'), os.getenv('location'),
+                                       os.getenv('hours_old'),
                                        os.getenv('results_wanted'), offset)
             # new_data = pd.read_csv("temp.csv")
             print(f"len(new_data): {len(new_data)}")
@@ -131,6 +133,7 @@ def main():
     df = pd.concat([data, new_df])
     df.to_excel(excel_file, index=False, engine='openpyxl')
     beautify_excel()
+
 
 if __name__ == "__main__":
     main()

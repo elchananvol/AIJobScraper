@@ -4,11 +4,10 @@ from jobspy import scrape_jobs
 # full docs here: https://github.com/Bunsly/JobSpy
 
 
-def scrape_all_jobs(search_term, location, hours_old, results_wanted, offset=0):
+def scrape_all_jobs(site_name, search_term, location, hours_old, results_wanted, offset=0):
+    site_name = [item.strip() for item in site_name.split(',')]
     return scrape_jobs(
-        site_name=["indeed", "linkedin", "zip_recruiter", "glassdoor"],
-        # site_name=["glassdoor"],
-        # site_name=["linkedin"],
+        site_name=site_name,
         search_term=search_term,
         location=location,
         distance=25,
