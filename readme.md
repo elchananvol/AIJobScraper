@@ -17,7 +17,7 @@ This project enables you to scrape job postings from LinkedIn, Glassdoor, Indeed
     ```
    
 2. **Obtain OpenAI API Key:**
-    - Get your API key from [OpenAI](https://platform.openai.com/account/api-keys).
+    - Get your [OpenAI API key](https://platform.openai.com/account/api-keys).
 
 3. **Create a `.env` file:**
     - Use the `.env-example` file provided as a template.
@@ -35,8 +35,9 @@ This project enables you to scrape job postings from LinkedIn, Glassdoor, Indeed
     ```
 
 2. **Output:**
-    - The results will be saved in an `jobs.xlsx` file in the project directory.
-    - ![img.png](img.png)
+
+   The results will be saved in an `jobs.xlsx` file in the project directory.
+   ![img.png](img.png)
 
 ## Notes
 

@@ -56,7 +56,7 @@ def beautify_excel():
                 # dv.add(cell)
                 if cell.value == "no":
                     cell.fill = red_fill
-                elif cell.value == "yes":
+                elif cell.value == "yes" or cell.value == "maybe+":
                     cell.fill = green_fill
                 elif cell.value not in ["yes", "no"]:
                     cell.fill = yellow_fill
@@ -80,7 +80,6 @@ def general_scrape_and_ai(unique_urls, assistant):
                                        os.getenv('results_wanted'), offset)
             # new_data = pd.read_csv("temp.csv")
             print(f"len(new_data): {len(new_data)}")
-            # print(new_data)
             # new_data.to_csv(f"temp{offset}.csv", index=False)
         except Exception as e:
             print(f"Error while scraping data: ,{str(e)}")
@@ -113,7 +112,6 @@ def general_scrape_and_ai(unique_urls, assistant):
                 except Exception as e:
                     print(f"Error while sending to gpt: ,{str(e)}")
         offset += len(new_data)
-        # new_data.to_csv(f"after_ai_temp{offset}.csv", index=False)
         break  # stop the loop
 
     return new_df
@@ -124,11 +122,11 @@ def main():
     data = load_df()
     unique_urls = set(data["link"])
     assistant_name = "MyJobsMatcher"
-    with open('instructions.txt', 'r') as file:
+    with open('instructions.txt', 'r',encoding='utf-8') as file:
         instructions = file.read()
     assistant = OpenAIAssistant(os.getenv('api_key'), assistant_name, instructions, os.getenv('model'),
                                 os.getenv('assistant_id'))
-    # print(assistant.assistant_id) # for using the same assistant for the next round
+    print(assistant.assistant_id) # for using the same assistant for the next round
     new_df = general_scrape_and_ai(unique_urls, assistant)
     df = pd.concat([data, new_df])
     df.to_excel(excel_file, index=False, engine='openpyxl')
