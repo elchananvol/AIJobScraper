@@ -76,7 +76,7 @@ def beautify_excel():
     wb.save(excel_file)
 
 
-def general_scrape_and_ai(unique_urls, assistant):
+def scrape_and_filter_ai(unique_urls, assistant):
     """
     scrape and filter.
     The script runs in a loop until all data is scraped (to handle cases where the process may be blocked midway,
@@ -149,7 +149,7 @@ def main():
                                 os.getenv('assistant_id'))
     # for using the same assistant for the next round
     logging.info(f"Assistant created successfully. assistant ID: {assistant.assistant_id}")
-    new_df = general_scrape_and_ai(unique_urls, assistant)
+    new_df = scrape_and_filter_ai(unique_urls, assistant)
     df = pd.concat([data, new_df])
     df.to_excel(excel_file, index=False, engine='openpyxl')
     beautify_excel()

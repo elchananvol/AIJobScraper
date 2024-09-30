@@ -43,6 +43,7 @@ This project enables you to scrape job postings from LinkedIn, Glassdoor, Indeed
 
 - Make sure your `.env` and `instruction.txt` files are properly configured before running the script.
 - You can reuse the AI assistant in your project by printing the assistant instance ID in [main function](https://github.com/elchananvol/AIJobScraper/blob/d151e1492b591b4e73579ebe1dcb74f452e8dc08/jobs.py#L131) for the first time and then configur it in the `.env` file for the next running.
+- LinkedIn typically blocks scraping after a certain period. Try running it again or adjust the `scrape_and_filter_ai` function by modifying the offset or the loop. You can also save the results to a temporary file to avoid losing data if the program gets stuck.
 - The project is designed to be easily customizable, so feel free to adjust the scraping and filtering logic as needed.
 
 ## Support
