@@ -1,6 +1,6 @@
-import os
 from openai import OpenAI
 import time
+
 
 
 class OpenAIAssistant:
@@ -15,56 +15,61 @@ class OpenAIAssistant:
                 model=model,
             )
             self.assistant_id = self.assistant.id
+        self.thread = self.client.beta.threads.create()
 
-    def __submit_message_to_thread(self, thread, user_message):
+    def __submit_message_to_thread(self, user_message):
         self.client.beta.threads.messages.create(
-            thread_id=thread.id, role="user", content=user_message
+            thread_id=self.thread.id, role="user", content=user_message
         )
         return self.client.beta.threads.runs.create(
-            thread_id=thread.id,
+            thread_id=self.thread.id,
             assistant_id=self.assistant_id,
         )
 
-    def __get_thread_messages(self, thread):
-        return self.client.beta.threads.messages.list(thread_id=thread.id, order="asc")
+    def __get_thread_messages(self):
+        return self.client.beta.threads.messages.list(thread_id=self.thread.id, order="desc")
 
-    def create_thread_and_run(self, user_input):
+    def __create_thread(self):
         thread = self.client.beta.threads.create()
-        run = self.__submit_message_to_thread(thread, user_input)
-        return thread, run
+        return thread
 
-    def pretty_print(self, messages):
+    @staticmethod
+    def pretty_print(messages):
         print("# Messages")
         for m in messages:
             print(f"{m.role}: {m.content[0].text.value}")
         print()
 
-    def __get_user_messages(self, messages):
+    @staticmethod
+    def __get_user_messages(messages):
         return [m.content[0].text.value for m in messages if m.role == "assistant"]
 
-    def wait_on_run(self, run, thread):
+    def wait_on_run(self, run):
         while run.status == "queued" or run.status == "in_progress":
             run = self.client.beta.threads.runs.retrieve(
-                thread_id=thread.id,
+                thread_id=self.thread.id,
                 run_id=run.id,
             )
             time.sleep(1)
         return run
 
     def submit_message(self, msg):
-        thread2, run2 = self.create_thread_and_run(msg)
-        self.wait_on_run(run2, thread2)
-        return self.__get_user_messages(self.__get_thread_messages(thread2))[0]
+        run = self.__submit_message_to_thread(msg)
+        self.wait_on_run(run)
+        return self.__get_user_messages(self.__get_thread_messages())[0]
+
 
 # if __name__ == "__main__":
-#     api_key =
+#     api_key = "sk"
 #     assistant_name = "Math Tutor"
-#     # instructions = "no meter what user say, you have to response 'dsrtgsr'"
-#     instructions = """You are coordinating professional resumes.
-#      Answer with 'yes' or 'no' or 'maybe' and provide an explanation.
-#      If there is any doubt, the answer should be 'maybe'."""
-#     model = "gpt-4o"
-
-# assistant = OpenAIAssistant(api_key, assistant_name, instructions, model, )
-# print(assistant.assistant.id)
-# assistant.submit_message("bla bla")
+#     instructions = ""
+#     # instructions = """You are coordinating professional resumes.
+#     #  Answer with 'yes' or 'no' or 'maybe' and provide an explanation.
+#     #  If there is any doubt, the answer should be 'maybe'."""
+#     model = "gpt-4o-mini"
+#
+#     assistant = OpenAIAssistant(api_key, assistant_name, instructions, model)
+#     print(assistant.assistant.id)
+#     print(assistant.submit_message("how are you"))
+#     print(assistant.submit_message("bla bla"))
+#     print(assistant.submit_message("what is the average weather in new york in August"))
