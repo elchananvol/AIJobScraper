@@ -1,9 +1,12 @@
-from link_scraper import *
+import pandas as pd
+from datetime import date
 from ai import *
 from jobs_scraper import *
 from openpyxl import load_workbook
 from openpyxl.styles import PatternFill
+import logging
 import os
+logging.basicConfig(level=logging.INFO)
 
 excel_file = "jobs.xlsx"
 required_columns = ["applied", "AI_recommendation", "AI_explanation", "company", "title", "link", "description",
@@ -31,6 +34,7 @@ def load_df():
                 raise ValueError(f"Missing required column: {col}")
     else:
         df = pd.DataFrame(columns=required_columns)
+    # df.to_csv("after_ai_temp.csv", index=False)
     return df
 
 
@@ -78,16 +82,16 @@ def general_scrape_and_ai(unique_urls, assistant):
             new_data = scrape_all_jobs(os.getenv('sites'), os.getenv('search_term'), os.getenv('location'),
                                        os.getenv('hours_old'),
                                        os.getenv('results_wanted'), offset)
-            # new_data = pd.read_csv("temp.csv")
+
             print(f"len(new_data): {len(new_data)}")
             # new_data.to_csv(f"temp{offset}.csv", index=False)
+            # new_data = pd.read_csv("temp.csv")
         except Exception as e:
             print(f"Error while scraping data: ,{str(e)}")
             new_data = pd.DataFrame(columns=required_columns)
         for index, row in new_data.iterrows():
             if row['job_url'] not in unique_urls:
                 try:
-                    unique_urls.add(row['job_url'])
                     msg = f"title: {row['title']}. description: {row['description']}"
 
                     ai_recommend = assistant.submit_message(msg)
@@ -107,8 +111,9 @@ def general_scrape_and_ai(unique_urls, assistant):
 
                     }
                     new_df.loc[len(new_df)] = new_row
-                    new_row_df = pd.DataFrame([new_row])
-                    new_row_df.to_csv(f"after_ai_temp.csv", mode='a', index=False, header=False)
+                    # new_row_df = pd.DataFrame([new_row])
+                    # new_row_df.to_csv(f"after_ai_temp.csv", mode='a', index=False, header=False)
+                    unique_urls.add(new_row['link'])
                 except Exception as e:
                     print(f"Error while sending to gpt: ,{str(e)}")
         offset += len(new_data)

@@ -1,8 +1,6 @@
 from openai import OpenAI
 import time
 
-
-
 class OpenAIAssistant:
     def __init__(self, api_key, assistant_name, instructions, model, assistant_id=None):
 
@@ -41,7 +39,7 @@ class OpenAIAssistant:
         print()
 
     @staticmethod
-    def __get_user_messages(messages):
+    def get_user_messages(messages):
         return [m.content[0].text.value for m in messages if m.role == "assistant"]
 
     def wait_on_run(self, run):
@@ -56,8 +54,7 @@ class OpenAIAssistant:
     def submit_message(self, msg):
         run = self.__submit_message_to_thread(msg)
         self.wait_on_run(run)
-        return self.__get_user_messages(self.__get_thread_messages())[0]
-
+        return OpenAIAssistant.get_user_messages(self.__get_thread_messages())[0]
 
 # if __name__ == "__main__":
 #     api_key = "sk"

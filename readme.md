@@ -15,7 +15,7 @@ This project enables you to scrape job postings from LinkedIn, Glassdoor, Indeed
     ```bash
     pip install -r requirements.txt
     ```
-   
+   tested with python 3.12
 2. **Obtain OpenAI API Key:**
     - Get your [OpenAI API key](https://platform.openai.com/account/api-keys).
 
