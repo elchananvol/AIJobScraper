@@ -1,0 +1,22 @@
+# Secrets and personal matching data
+.env
+instructions.txt
+user_profile.txt
+
+# Generated job data and exports
+*.xlsx
+*.csv
+!*.example.csv
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# IDE/editor files
+.idea/
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db

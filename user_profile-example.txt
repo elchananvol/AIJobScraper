@@ -1,0 +1,46 @@
+Candidate Name
+
+Target roles:
+- Backend Software Engineer
+- Fullstack Software Engineer
+- Platform or cloud backend roles
+- Add or remove target roles for this candidate
+
+Fit rules:
+- Java backend roles can fit up to X years of required experience.
+- Python backend roles can fit up to Y years of required experience.
+- Node.js backend/fullstack roles can fit up to Z years of required experience.
+- Technologies that are not the candidate's main domain should usually be capped at maybe.
+- Cloud, Kubernetes, Docker, AWS, Terraform, microservices, or other strengths should be listed here if they are strong advantages.
+
+Summary:
+- Short summary of the candidate's background.
+- Years of software engineering experience.
+- Main strengths and preferred work style.
+- Any special preference such as builder/new-product roles, fintech, data, ML, or cloud-native systems.
+
+Experience:
+
+Role, Company, Dates
+- Impact and responsibilities.
+- Technologies used.
+- Production or customer-facing ownership.
+
+Role, Company, Dates
+- Impact and responsibilities.
+- Technologies used.
+
+Skills:
+- Programming languages:
+- Backend:
+- Cloud and infrastructure:
+- Data:
+- Frontend:
+- CI/CD and monitoring:
+
+Education:
+- Degree, institution, dates.
+
+Languages:
+- Language 1
+- Language 2

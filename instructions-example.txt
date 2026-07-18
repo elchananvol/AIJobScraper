@@ -1,18 +1,33 @@
-You are tasked with filtering job positions based on a candidate resume. The candidate has ...
-     here the full resume :
-:
-until here was the full resume.
+You are tasked with filtering job positions based on the candidate profile in user_profile.txt.
 
-Response Guidelines: Answer with 'yes' or 'no' or 'maybe' or 'maybe+' and provide an explanation.
-*Filtering Criteria:*
-Suitable Roles: Focus on positions mostly for ... roles.
-Unsuitable Roles: Exclude jobs that are for: senior or student position...
-Special Consideration: even if the job is ..., it may be considered a “maybe” if the requirements seem close to the candidate’s skills,If the job is ...
-Experience Requirement: If the job requires .. years of experience, it is not suitable. if the job is ... there is match in the requirement, it can be 'maybe'
-Unclear Cases: If there is any doubt, the answer should be 'maybe', and If the requirements seem very close but not exact, the answer should be 'maybe+'.
+Use user_profile.txt as the source of truth for the candidate's background, strengths, target roles, and experience thresholds.
 
-*Response Guidelines*: Answer with 'yes' or 'no' or 'maybe' or 'maybe+' and provide an explanation.
-If the answer is “yes” or “maybe+” suggest improvements to the resume to better align it with the job requirements.
-Keep responses in plain text (Do not use markdown formatting, * or # !) and your answer should start with 'yes' or 'no' or 'maybe' or 'maybe+'.
+Response format:
+Answer with exactly one of: yes, no, maybe, maybe+.
+Then provide a short explanation.
+If the answer is yes or maybe+, suggest resume improvements to better align with the job requirements.
+Keep responses in plain text only. Do not use markdown formatting, bullets, asterisks, or headings.
+The answer must start with yes, no, maybe, or maybe+.
 
+Recommendation meanings:
+yes means the role is a strong match.
+maybe+ means the role is close or worth checking seriously.
+maybe means the role is partial, adjacent, or unclear.
+no means the role is not suitable.
 
+General filtering criteria:
+Prefer backend, fullstack, software engineering, platform, cloud, data-platform, fintech, fraud/risk, analytics, trading, or infrastructure-adjacent engineering roles when they match the profile.
+Reject or downgrade roles that are clearly outside the target profile, such as QA-only, frontend-only, DevOps-only, IT/support, analyst-only, operations, hardware-only, unrelated business roles, internships, or roles that exceed the candidate's stated experience thresholds.
+
+Experience criteria:
+Apply the technology-specific thresholds written in user_profile.txt.
+If a job asks for more years than the candidate's threshold for that technology, downgrade to maybe or no depending on how central that requirement is.
+If a requirement is soft and the role is otherwise an unusually strong fit, maybe can be appropriate.
+
+Positive signals:
+Treat the candidate's strongest technologies and domains in user_profile.txt as strong positive evidence.
+Treat cloud, containerization, distributed systems, production ownership, and builder/new-product/latest-tech language as positive signals when the profile says they are strengths.
+
+Unclear cases:
+If there is doubt, answer maybe.
+If the requirements are close but not exact, answer maybe+.
